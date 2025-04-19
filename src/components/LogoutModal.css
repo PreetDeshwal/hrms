@@ -1,0 +1,94 @@
+.logout-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.88);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-modal-box {
+    background: #fff;
+    border-radius: 22px;
+    min-width: 500px;
+    max-width: 95vw;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    display: flex;
+    flex-direction: column;
+}
+
+.logout-modal-header {
+    background: #4b0076;
+    color: #fff;
+    font-size: 1.28rem;
+    font-weight: 500;
+    text-align: center;
+    padding: 28px 0 18px 0;
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+}
+
+.logout-modal-content {
+    background: #fff;
+    padding: 32px 18px 32px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logout-modal-message {
+    font-size: 1.08rem;
+    margin-bottom: 38px;
+    color: #222;
+    text-align: center;
+}
+
+.logout-modal-actions {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+}
+
+.logout-modal-cancel {
+    background: #4b0076;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 10px 38px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(80, 0, 120, 0.08);
+    transition: background 0.14s;
+}
+
+.logout-modal-cancel:hover {
+    background: #2e0852;
+}
+
+.logout-modal-logout {
+    background: #fff;
+    color: #b91c1c;
+    border: 1.5px solid #b91c1c;
+    border-radius: 24px;
+    padding: 10px 38px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.14s, color 0.14s;
+}
+
+.logout-modal-logout:hover {
+    background: #fee2e2;
+    color: #fff;
+    border-color: #b91c1c;
+}
+
+@media (max-width: 600px) {
+    .logout-modal-box {
+        min-width: 0;
+        width: 96vw;
+    }
+}
