@@ -1,50 +1,79 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { FaEdit, FaTrash, FaUserPlus } from 'react-icons/fa'
-import './Employees.css'
+import React, { useState, useRef, useEffect } from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import "./Employees.css";
 
-const initialCandidates = [
+const initialEmployees = [
   {
-    id: '1',
-    fullName: 'Aarav Sharma',
-    email: 'aarav.sharma@example.com',
-    phone: '9876543210',
-    position: 'Senior Developer',
-    status: 'New',
-    experience: '3+',
-    resume: 'Resume content for Aarav'
+    id: "1",
+    profile: {
+      bgColor: "#4338ca",
+      initials: "JC",
+      img: "https://randomuser.me/api/portraits/women/1.jpg"
+    },
+    fullName: "Jane Copper",
+    email: "jane.copper@example.com",
+    phone: "(704) 555-0127",
+    position: "Intern",
+    department: "Designer",
+    dateOfJoining: "10/10/18"
   },
   {
-    id: '2',
-    fullName: 'Priya Singh',
-    email: 'priya.singh@example.com',
-    phone: '9123456780',
-    position: 'Human Resource Intern',
-    status: 'New',
-    experience: '1+',
-    resume: 'Resume content for Priya'
+    id: "2",
+    profile: {
+      bgColor: "#0891b2",
+      initials: "AM",
+      img: "https://randomuser.me/api/portraits/women/2.jpg"
+    },
+    fullName: "Arlene McCoy",
+    email: "arlene.mccoy@example.com",
+    phone: "(302) 555-0107",
+    position: "Full Time",
+    department: "Designer",
+    dateOfJoining: "11/12/19"
   },
   {
-    id: '3',
-    fullName: 'Kabir Verma',
-    email: 'kabir.verma@example.com',
-    phone: '9988776655',
-    position: 'Full Time Designer',
-    status: 'Selected',
-    experience: '2+',
-    resume: 'Resume content for Kabir'
+    id: "3",
+    profile: {
+      bgColor: "#7e22ce",
+      initials: "CF",
+      img: "https://randomuser.me/api/portraits/men/3.jpg"
+    },
+    fullName: "Cody Fisher",
+    email: "deanna.curtis@example.com",
+    phone: "(252) 555-0126",
+    position: "Senior",
+    department: "Backend Development",
+    dateOfJoining: "08/15/17"
   },
   {
-    id: '4',
-    fullName: 'Sneha Iyer',
-    email: 'sneha.iyer@example.com',
-    phone: '9876501234',
-    position: 'Full Time Developer',
-    status: 'Rejected',
-    experience: '0',
-    resume: 'Resume content for Sneha'
+    id: "4",
+    profile: {
+      bgColor: "#be123c",
+      initials: "JW",
+      img: "https://randomuser.me/api/portraits/women/4.jpg"
+    },
+    fullName: "Janney Wilson",
+    email: "janney.wilson@example.com",
+    phone: "(252) 555-0126",
+    position: "Junior",
+    department: "Backend Development",
+    dateOfJoining: "12/04/17"
+  },
+  {
+    id: "5",
+    profile: {
+      bgColor: "#92400e",
+      initials: "LA",
+      img: "https://randomuser.me/api/portraits/men/5.jpg"
+    },
+    fullName: "Leslie Alexander",
+    email: "willie.jennings@example.com",
+    phone: "(207) 555-0119",
+    position: "Team Lead",
+    department: "Human Resource",
+    dateOfJoining: "05/30/14"
   }
-]
-
+];
 
 const POSITION_OPTIONS = [
   "Position",
@@ -56,23 +85,14 @@ const POSITION_OPTIONS = [
 ];
 
 export default function Employees() {
-  const [employees, setEmployees] = useState([])
-  const [search, setSearch] = useState("")
-  const [position, setPosition] = useState("Position")
-  const [menuOpen, setMenuOpen] = useState(null)
-  const menuRefs = useRef({})
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [editEmployee, setEditEmployee] = useState(null)
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    position: '',
-    department: '',
-    dateOfJoining: ''
-  })
+  const [employees, setEmployees] = useState([]);
+  const [search, setSearch] = useState("");
+  const [position, setPosition] = useState("Position");
+  const [menuOpen, setMenuOpen] = useState(null);
+  const menuRefs = useRef({});
 
   useEffect(() => {
+    // Simulated localStorage for demo
     const stored = localStorage.getItem("employees");
     if (stored) setEmployees(JSON.parse(stored));
     else {
@@ -96,7 +116,7 @@ export default function Employees() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, [menuOpen]);
 
-  // Filtering
+  // Filtering logic
   let filtered = employees.filter(
     (e) =>
       (position === "Position" || e.position === position) &&
@@ -105,100 +125,10 @@ export default function Employees() {
         e.phone.includes(search))
   );
 
-  // Helpers
-  const getProfileInitials = (name) =>
-    name
-      .split(" ")
-      .map((part) => part[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-
-  const getRandomColor = () => {
-    const colors = [
-      "#4338ca", "#0891b2", "#7e22ce", "#be123c", "#92400e", "#166534", "#9f1239", "#1e40af"
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
-
-  // Modal handlers
-  function openAddModal() {
-    setEditEmployee(null);
-    setFormData({
-      fullName: "",
-      email: "",
-      phone: "",
-      position: "",
-      department: "",
-      dateOfJoining: "",
-    });
-    setIsModalOpen(true);
+  // Action handlers (replace with your real handlers)
+  function handleEdit(employee) {
+    alert("Edit: " + employee.fullName);
   }
-
-  function openEditModal(employee) {
-    setEditEmployee(employee);
-    setFormData({
-      fullName: employee.fullName,
-      email: employee.email,
-      phone: employee.phone,
-      position: employee.position,
-      department: employee.department,
-      dateOfJoining: employee.dateOfJoining,
-    });
-    setIsModalOpen(true);
-  }
-
-  function handleInputChange(e) {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (
-      !formData.fullName ||
-      !formData.email ||
-      !formData.phone ||
-      !formData.position ||
-      !formData.department ||
-      !formData.dateOfJoining
-    ) {
-      alert("Please fill all fields");
-      return;
-    }
-    if (editEmployee) {
-      // Edit
-      const updated = employees.map((emp) =>
-        emp.id === editEmployee.id
-          ? {
-              ...emp,
-              ...formData,
-              profile: {
-                ...emp.profile,
-                initials: getProfileInitials(formData.fullName)
-              }
-            }
-          : emp
-      );
-      setEmployees(updated);
-      localStorage.setItem("employees", JSON.stringify(updated));
-    } else {
-      // Add
-      const newEmployee = {
-        id: Date.now().toString(),
-        profile: {
-          bgColor: getRandomColor(),
-          initials: getProfileInitials(formData.fullName)
-        },
-        ...formData
-      };
-      const updated = [...employees, newEmployee];
-      setEmployees(updated);
-      localStorage.setItem("employees", JSON.stringify(updated));
-    }
-    setIsModalOpen(false);
-  }
-
   function handleDelete(employee) {
     if (window.confirm(`Delete ${employee.fullName}?`)) {
       const updated = employees.filter((emp) => emp.id !== employee.id);
@@ -232,9 +162,6 @@ export default function Employees() {
             &#128269;
           </span>
         </div>
-        <button className="add-employee-btn" onClick={openAddModal}>
-          <FaUserPlus style={{ marginRight: 6 }} /> Add Employee
-        </button>
       </div>
       <div className="employees-table-container">
         <table className="employees-table">
@@ -291,7 +218,7 @@ export default function Employees() {
                       <button
                         className="action-item"
                         onClick={() => {
-                          openEditModal(e);
+                          handleEdit(e);
                           setMenuOpen(null);
                         }}
                       >
@@ -323,87 +250,6 @@ export default function Employees() {
           </tbody>
         </table>
       </div>
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="employees-modal-overlay" onClick={() => setIsModalOpen(false)}>
-          <div className="employees-modal" onClick={e => e.stopPropagation()}>
-            <h2 style={{ marginBottom: 16 }}>
-              {editEmployee ? "Edit Employee" : "Add Employee"}
-            </h2>
-            <form onSubmit={handleSubmit} className="employee-form">
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Full Name*</label>
-                  <input
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Email Address*</label>
-                  <input
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Phone Number*</label>
-                  <input
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Position*</label>
-                  <input
-                    name="position"
-                    value={formData.position}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Department*</label>
-                  <input
-                    name="department"
-                    value={formData.department}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Date of Joining*</label>
-                  <input
-                    name="dateOfJoining"
-                    type="text"
-                    placeholder="MM/DD/YY"
-                    value={formData.dateOfJoining}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: 12, marginTop: 18 }}>
-                <button type="button" className="employees-modal-cancel" onClick={() => setIsModalOpen(false)}>Cancel</button>
-                <button className="employees-modal-submit" type="submit">
-                  {editEmployee ? "Update" : "Add"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
-  )
+  );
 }
